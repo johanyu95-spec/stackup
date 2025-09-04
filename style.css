@@ -1,0 +1,25 @@
+<section id="main-visual" class="py-5">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <!-- 왼쪽: 텍스트 -->
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    개발자들의<br>
+                    특별한 공간
+                </h1>
+                <p class="lead mb-4">
+                    코드와 커피가 만나는 곳, 코딩 카페에서<br>
+                    당신의 아이디어를 현실로 만들어보세요.
+                </p>
+                <div>
+                    <button class="btn btn-primary btn-lg me-3">지금 방문하기</button>
+                    <button class="btn btn-outline-primary btn-lg">메뉴 보기</button>
+                </div>
+            </div>
+            <!-- 오른쪽: 이미지 -->
+            <div class="col-lg-6">
+                <img src="images/main-cafe.jpg" class="img-fluid rounded" alt="카페 내부">
+            </div>
+        </div>
+    </div>
+</section>
