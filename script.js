@@ -143,6 +143,17 @@ function initializeCarousel() {
     }
 }
 
+// 둥둥 버튼 위치 무작위 배치
+window.addEventListener("load", () => {
+  const buttons = document.querySelectorAll(".float-btn");
+  buttons.forEach(btn => {
+    const top = Math.random() * 80 + 10;   // 10% ~ 90% 세로
+    const left = Math.random() * 80 + 10;  // 10% ~ 90% 가로
+    btn.style.top = top + "vh";
+    btn.style.left = left + "vw";
+  });
+});
+
 
 // 로딩 커버 페이지 관련 JavaScript
 window.addEventListener('load', () => {
