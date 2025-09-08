@@ -4,7 +4,7 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKmilkyway.woff2') format('woff2');
     font-weight: normal;
     font-display: swap;
-    font-style: normal;
+   font-style: normal;
 }
 
 body {
@@ -20,7 +20,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'TAEBAEK milkyway', 'Orbitron', sans-serif;
   font-size-adjust: 60%;
 }
-
 /* 네 모서리 버튼 컨테이너 */
 .corner-buttons {
   position: absolute;
@@ -45,6 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 .corner-btn img {
   width: 80%;
   height: 80%;
+  max-width: 150px;
   object-fit: contain;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -71,6 +71,7 @@ h1, h2, h3, h4, h5, h6 {
   0%, 0% { filter: drop-shadow(0 0 5px #fff); opacity: 1; }
   50% { filter: drop-shadow(0 0 15px #ff6ec7) drop-shadow(0 0 25px #b6b6ff); opacity: 0.8; }
 }
+
 
 /* 우주 배경 */
 .galaxy-bg {
