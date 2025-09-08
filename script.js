@@ -266,8 +266,10 @@ function typeWriterEffect(element, speed) {
 
 // 스크롤 이벤트에 따른 타이핑 효과 적용
 document.addEventListener("DOMContentLoaded", () => {
+    // 기존 card-text 클래스와 새로운 card-text-letter ID 모두 포함
     const cardTexts = document.querySelectorAll(".card-text");
-
+    const cardTextLetter = document.getElementById("card-text-letter");
+    
     const observerOptions = {
         root: null,
         rootMargin: "0px",
@@ -285,7 +287,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, observerOptions);
 
+    // 기존 .card-text 클래스 요소들을 관찰
     cardTexts.forEach((cardText) => {
         observer.observe(cardText);
     });
+    
+    // card-text-letter ID 요소도 관찰 (존재하는 경우)
+    if (cardTextLetter) {
+        observer.observe(cardTextLetter);
+    }
 });
