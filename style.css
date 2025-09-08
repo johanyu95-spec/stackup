@@ -35,8 +35,8 @@ h2 {
     text-align: center;
 }
 
-.image{
-  object-fit
+.image {
+    object-fit: cover;
 }
 
 /* 네 모서리 버튼 컨테이너 */
@@ -622,12 +622,13 @@ h2 {
 }
 
 .map-buttons {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+    position: static;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-    z-index: 10;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 /* Flexbox를 사용한 중앙 정렬 예시 */
