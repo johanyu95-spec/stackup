@@ -44,7 +44,6 @@ h2 {
 
 .image {
     object-fit: cover;
-
   }
 
 /* 전체 래퍼 (여백과 배경 제어) */
@@ -105,10 +104,6 @@ h2 {
   transform: translateY(-1px);
 }
 
-/* 만약 여러 카드 타이틀마다 개성 다르게 하고 싶다면 (예시) */
-/* 예: #card-title-letter.style-soft { font-style: italic; } 
-   필요하면 HTML에 class="style-soft" 추가하면 적용됩니다. */
-
 /* 카드 본문 텍스트 */
 #card-text-letter {
   font-size: 1rem;
@@ -116,7 +111,7 @@ h2 {
   white-space: pre-line;
   margin: 0;
   padding-bottom: 6px;
-  text-align: justify;
+  text-align: center;
 }
 
 /* 작은 장식 (왼쪽 상단 우표 또는 스탬프 느낌) */
