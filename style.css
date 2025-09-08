@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 네 모서리 버튼 컨테이너 */
 .corner-buttons {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none; /* 배경 클릭 방해하지 않음 */
