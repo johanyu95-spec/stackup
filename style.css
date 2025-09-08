@@ -16,10 +16,17 @@ body {
   font-size: 16px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h3, h4, h5, h6 {
   font-family: 'TAEBAEK milkyway', 'Orbitron', sans-serif;
   font-size-adjust: 60%;
 }
+
+h2{
+  font-family: 'TAEBAEK milkyway', 'Orbitron', sans-serif;
+  font-size-adjust: 60%;
+  margin-top: 100px;
+}
+
 /* 네 모서리 버튼 컨테이너 */
 .corner-buttons {
   position: absolute;
@@ -620,4 +627,8 @@ footer {
 @keyframes shootingSplash {
   from { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
   to { transform: translateX(200vw) translateY(200vw) rotate(-45deg); opacity: 0; }
+}
+
+.text-muted {
+  color: white !important; /* 어떤 다른 스타일보다 우선 적용 */
 }
