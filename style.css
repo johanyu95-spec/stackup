@@ -25,6 +25,7 @@ h5,
 h6 {
     font-family: "TaebaekMilkyWay", "Orbitron", sans-serif;
     font-size-adjust: 60%;
+    text-align: center;
 }
 
 h2 {
@@ -32,6 +33,10 @@ h2 {
     font-size-adjust: 60%;
     margin-top: 100px;
     text-align: center;
+}
+
+.image{
+  object-fit
 }
 
 /* 네 모서리 버튼 컨테이너 */
