@@ -33,12 +33,111 @@ h2 {
     font-size-adjust: 60%;
     margin-top: 100px;
     text-align: center;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .image {
     object-fit: cover;
+
+  }
+
+/* 전체 래퍼 (여백과 배경 제어) */
+#wrap-letter {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
+/* 카드 (종이 질감, 테두리, 그림자) */
+#card-letter {
+  max-width: 600px;
+  width: 100%;
+  background: #030303; /* 따뜻한 종이색 */
+  border: 1px solid rgba(200, 180, 150, 0.8);
+  border-radius: 14px;
+  box-shadow: 6px 10px 28px rgba(28, 20, 12, 0.12);
+  padding: 22px;
+  font-family: "Nanum Myeongjo", "Georgia", serif;
+  line-height: 1.75;
+  position: relative;
+  overflow: hidden;
+  /* 약한 종이 질감 효과 (CSS만으로) */
+  background-image:
+    linear-gradient(transparent 0, transparent 26px, rgba(230,214,188,0.035) 27px),
+    radial-gradient(circle at 10% 10%, rgba(0,0,0,0.01) 0, transparent 15%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 60%);
+  /* 투명도(반투명 레이어 효과) */
+  backdrop-filter: none;
+}
+
+/* 카드 모서리의 소프트 라운딩 + 테두리 강조 */
+#card-letter::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+/* 카드 바디 (내부 여백 조정) */
+#card-body-letter {
+  padding: 6px 4px;
+}
+
+/* 카드 제목 — id 우선 적용, 잉크 느낌과 각 제목마다 느낌 다르게 주기 위한 예시 */
+#card-title-letter {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #f0e0d5; /* 잉크색 브라운 */
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  /* 손글씨 느낌을 살리기 위한 transform */
+  transform: translateY(-1px);
+}
+
+/* 만약 여러 카드 타이틀마다 개성 다르게 하고 싶다면 (예시) */
+/* 예: #card-title-letter.style-soft { font-style: italic; } 
+   필요하면 HTML에 class="style-soft" 추가하면 적용됩니다. */
+
+/* 카드 본문 텍스트 */
+#card-text-letter {
+  font-size: 1rem;
+  color: #f1ebe7; /* 진한 갈색 잉크 */
+  white-space: pre-line;
+  margin: 0;
+  padding-bottom: 6px;
+  text-align: justify;
+}
+
+/* 작은 장식 (왼쪽 상단 우표 또는 스탬프 느낌) */
+#card-letter .stamp {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 0.75rem;
+  color: rgba(88,56,38,0.6);
+  transform: rotate(-12deg);
+  opacity: 0.85;
+}
+
+/* 반응형: 화면이 작아지면 패딩과 글자 크기 줄이기 */
+@media (max-width: 480px) {
+  #card-letter { padding: 16px; border-radius: 10px; }
+  #card-title-letter { font-size: 1.15rem; }
+  #card-text-letter { font-size: 0.98rem; }
+}
+
+  
 /* 네 모서리 버튼 컨테이너 */
 .corner-buttons {
     position: absolute;
@@ -420,6 +519,102 @@ h2 {
     position: relative;
     animation: logoTwinkle 3s infinite alternate;
     overflow: hidden;
+}
+
+/* 컨테이너 */
+#card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 공통 카드 스타일 */
+.card {
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* 카드별 개성 */
+#card-1 {
+  background: rgba(255, 204, 112, 0.15);
+  border: 1px solid rgba(255, 204, 112, 0.5);
+}
+#card-1 .card-title {
+  color: #ffcc70;
+  text-shadow: 0 0 6px rgba(255, 204, 112, 0.6);
+}
+
+#card-2 {
+  background: rgba(128, 223, 255, 0.15);
+  border: 1px solid rgba(128, 223, 255, 0.5);
+}
+#card-2 .card-title {
+  color: #80dfff;
+  text-shadow: 0 0 6px rgba(128, 223, 255, 0.6);
+}
+
+#card-3 {
+  background: rgba(192, 132, 252, 0.15);
+  border: 1px solid rgba(192, 132, 252, 0.5);
+}
+#card-3 .card-title {
+  color: #c084fc;
+  text-shadow: 0 0 6px rgba(192, 132, 252, 0.6);
+}
+
+/* 카드 타이틀 공통 */
+.card-title {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+  padding-bottom: 8px;
+}
+
+/* 아이콘 */
+.icon {
+  margin-right: 6px;
+}
+
+/* 표 스타일 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+table th {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 리스트 */
+ul {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
 }
 
 /* 은하수 반짝임 효과 */
