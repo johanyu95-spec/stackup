@@ -1,9 +1,9 @@
 /* 폰트 정의 추가 */
 @font-face {
-  font-family: 'TAEBAEK milkyway';
-  src: url('TAEBAEK milkyway.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'TaebaekMilkyWay';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+    font-weight: normal;
+    font-display: normal;
 }
 
 body {
