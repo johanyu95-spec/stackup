@@ -315,7 +315,15 @@ function typeWriterEffect(element, speed) {
                 element.innerHTML += text.charAt(i);
                 i++;
             }
-            setTimeout(type, speed);
+            // 100% 모션이 빠르게: 마지막 20%는 속도를 2배로 빠르게
+            const progress = i / text.length;
+            const fastSpeed = progress > 0.8 ? speed / 4 : speed / 2;
+            // 중간에 멈추는 것도 50% 줄여서
+            if (progress > 0.5 && Math.random() < 0.01) {
+                setTimeout(type, fastSpeed / 2);
+                return;
+            }
+            setTimeout(type, fastSpeed);
         } else {
             element.classList.remove("typing-text"); // Remove cursor after typing is complete
         }
