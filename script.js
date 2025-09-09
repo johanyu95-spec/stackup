@@ -57,14 +57,14 @@ function generateMainGalaxyBackground() {
         }s linear infinite alternate`;
         galaxy.appendChild(planet);
     }
-
     // Function to create a shooting star
     function createShootingStar() {
         const shootingStar = document.createElement("div");
         shootingStar.className = "shooting-star";
-        shootingStar.style.top = `${Math.random() * 80}vh`;
-        shootingStar.style.left = `${Math.random() * 100}vw`;
-        shootingStar.style.transform = `rotate(-${15 + Math.random() * 30}deg)`;
+        // 중앙에서 떨어지도록 위치 지정
+        shootingStar.style.top = "0vh";
+        shootingStar.style.left = "50vw";
+        shootingStar.style.transform = "translateX(-50%) rotate(90deg)";
         galaxy.appendChild(shootingStar);
         setTimeout(() => shootingStar.remove(), 1200);
     }
@@ -325,7 +325,7 @@ function typeWriterEffect(element, speed) {
 
 // 스크롤 이벤트에 따른 타이핑 효과 적용
 document.addEventListener("DOMContentLoaded", () => {
-    const cardTexts = document.querySelectorAll(".animated-text");
+    const cardTexts = document.querySelectorAll(".card-text");
 
     const observerOptions = {
         root: null,
@@ -335,11 +335,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting && !entry.target.classList.contains("typing-completed")) {
-                // 요소가 화면에 보이고 아직 타이핑이 완료되지 않았으면 타이핑 효과 실행
+            // no-typing-motion 클래스가 있으면 효과 적용하지 않음
+            if (
+                entry.isIntersecting &&
+                !entry.target.classList.contains("typing-completed") &&
+                !entry.target.classList.contains("no-typing-motion")
+            ) {
                 typeWriterEffect(entry.target, 30);
                 entry.target.classList.add("typing-completed");
-                // 한 번 실행된 후에는 관찰 중단
                 observer.unobserve(entry.target);
             }
         });
