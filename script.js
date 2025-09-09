@@ -325,7 +325,7 @@ function typeWriterEffect(element, speed) {
 
 // 스크롤 이벤트에 따른 타이핑 효과 적용
 document.addEventListener("DOMContentLoaded", () => {
-    const cardTexts = document.querySelectorAll(".card-text");
+    const cardTexts = document.querySelectorAll(".animated-text");
 
     const observerOptions = {
         root: null,
