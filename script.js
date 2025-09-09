@@ -94,168 +94,227 @@ function generateSplashGalaxyBackground() {
     }
 }
 
-// 캐러셀 초기화 함수
-function initializeCarousels() {
-    const carouselContainers = document.querySelectorAll(".carousel-container");
-    carouselContainers.forEach((container) => {
-        const carousel = container.querySelector(".carousel");
-        const prevBtn = container.querySelector(".prev-btn");
-        const nextBtn = container.querySelector(".next-btn");
-        const dotsContainer = container.querySelector(".dots");
-
-        if (carousel && prevBtn && nextBtn && dotsContainer) {
-            const slides = carousel.children;
-            const totalSlides = slides.length;
-            let currentIndex = 0;
-
-            // Remove old dots if any
-            dotsContainer.innerHTML = "";
-            // Create dots for carousel
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement("span");
-                dot.addEventListener("click", () => {
-                    goToSlide(i);
-                });
-                dotsContainer.appendChild(dot);
-            }
-            const dots = Array.from(dotsContainer.children);
-
-            function updateCarousel() {
-                carousel.style.transform = `translateX(-${
-                    currentIndex * 100
-                }%)`;
-                updateDots();
-            }
-
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % totalSlides;
-                updateCarousel();
-            }
-
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                updateCarousel();
-            }
-
-            function goToSlide(index) {
-                currentIndex = index;
-                updateCarousel();
-            }
-
-            function updateDots() {
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle("active", i === currentIndex);
-                });
-            }
-
-            prevBtn.addEventListener("click", prevSlide);
-            nextBtn.addEventListener("click", nextSlide);
-
-            // Auto-slide for each carousel
-            setInterval(nextSlide, 5000);
-
-            // Initial setup for carousel
-            updateCarousel();
-        }
-    });
-}
-
-// 둥둥 버튼 위치 무작위 배치
-window.addEventListener("load", () => {
-    const buttons = document.querySelectorAll(".float-btn");
-    buttons.forEach((btn) => {
-        const top = Math.random() * 80 + 10; // 10% ~ 90% 세로
-        const left = Math.random() * 80 + 10; // 10% ~ 90% 가로
-        btn.style.top = top + "vh";
-        btn.style.left = left + "vw";
-    });
-});
-
-// 로딩 커버 페이지 관련 JavaScript
-window.addEventListener("load", () => {
+// 스플래시 화면 초기화 함수
+function initializeSplashScreen() {
     const splashScreen = document.getElementById("splashScreen");
     const mainContent = document.getElementById("mainContent");
+    const splashLogo = document.querySelector(".splash-logo");
+    const shootingStarSplash = document.querySelector(".shooting-star-splash");
 
-    // 커버 페이지의 은하수 배경을 먼저 생성
-    generateSplashGalaxyBackground();
+    // 별똥별 애니메이션
+    const splashStarAnimation = (star) => {
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDuration = `${Math.random() * 2 + 1.5}s`;
+    };
 
-    // 3.5초 후에 실행
-    setTimeout(() => {
-        // 커버 페이지를 서서히 사라지게 함
+    if (shootingStarSplash) {
+        splashStarAnimation(shootingStarSplash);
+        setInterval(() => splashStarAnimation(shootingStarSplash), 3000);
+    }
+
+    // 로고 애니메이션이 끝난 후 메인 콘텐츠 표시
+    const animationEndHandler = () => {
         splashScreen.style.opacity = "0";
-
-        // 메인 콘텐츠를 서서히 나타나게 함
-        mainContent.classList.remove("d-none");
-
-        // 메인 콘텐츠 은하수 배경 생성 시작 및 캐러셀 초기화
-        generateMainGalaxyBackground();
-        initializeCarousels(); // 모든 캐러셀 기능 초기화
-
         setTimeout(() => {
-            splashScreen.style.display = "none";
-        }, 500); // fadeOut 효과 시간과 일치시킴
-    }, 3500);
-});
+            splashScreen.remove();
+            mainContent.classList.remove("d-none");
+            generateMainGalaxyBackground();
+        }, 500);
+        splashLogo.removeEventListener("animationend", animationEndHandler);
+    };
 
-// 메뉴 토글 기능
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const navMenu = document.getElementById("navMenu");
+    if (splashLogo) {
+        splashLogo.addEventListener("animationend", animationEndHandler);
+    }
 
-if (hamburgerBtn && navMenu) {
-    hamburgerBtn.addEventListener("click", () => {
-        navMenu.classList.toggle("active");
-        hamburgerBtn.classList.toggle("active");
+    generateSplashGalaxyBackground();
+}
+
+// 개별 캐러셀 초기화 함수
+function initializeCarousel(carouselId, prevBtnId, nextBtnId, dotsId) {
+    const carousel = document.getElementById(carouselId);
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+    const dotsContainer = document.getElementById(dotsId);
+
+    if (!carousel || !prevBtn || !nextBtn || !dotsContainer) return;
+
+    const slides = carousel.children;
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+
+    // 기존 dots 제거
+    dotsContainer.innerHTML = "";
+
+    // dots 생성
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.addEventListener("click", () => {
+            currentIndex = i;
+            updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    const dots = dotsContainer.children;
+
+    const updateCarousel = () => {
+        const offset = -currentIndex * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+        
+        // dots 업데이트
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle("active", i === currentIndex);
+        }
+    };
+
+    prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalSlides - 1;
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex < totalSlides - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+    });
+
+    // 초기 상태 업데이트
+    updateCarousel();
+}
+
+// 모든 캐러셀 초기화
+function initializeCarousels() {
+    initializeCarousel("carousel-milkyway", "prevBtn-milkyway", "nextBtn-milkyway", "dots-milkyway");
+    initializeCarousel("carousel-food", "prevBtn-food", "nextBtn-food", "dots-food");
+    initializeCarousel("carousel-stay", "prevBtn-stay", "nextBtn-stay", "dots-stay");
+}
+
+// 햄버거 메뉴 기능
+function setupHamburgerMenu() {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    if (hamburgerBtn && navMenu) {
+        hamburgerBtn.addEventListener("click", () => {
+            hamburgerBtn.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        navLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                hamburgerBtn.classList.remove("active");
+                navMenu.classList.remove("active");
+            });
+        });
+    }
+}
+
+// 개별 평점 시스템 설정
+function setupIndividualRatingSystem(formId, ratingName, currentValueId) {
+    const form = document.getElementById(formId);
+    const currentValue = document.getElementById(currentValueId);
+    const stars = document.querySelectorAll(`input[name="${ratingName}"]`);
+
+    if (!form || !currentValue || stars.length === 0) return;
+
+    stars.forEach(star => {
+        star.addEventListener('change', () => {
+            const selectedValue = document.querySelector(`input[name="${ratingName}"]:checked`)?.value;
+            if (selectedValue) {
+                currentValue.textContent = `선택된 평점: ${selectedValue}점`;
+            }
+        });
     });
 }
 
-// Rating system functionality
-const form = document.getElementById("ratingForm");
-const currentValue = document.getElementById("currentValue");
-const errorText = document.getElementById("errorText");
-const reviewText = document.getElementById("review-text");
+// 최종 평점 및 소원 보내기 기능
+function setupFinalRatingSystem() {
+    const finalForm = document.getElementById("finalRatingForm");
+    const finalCurrentValue = document.getElementById("finalCurrentValue");
+    const finalErrorText = document.getElementById("finalErrorText");
+    const finalStars = document.querySelectorAll('input[name="final-rating"]');
+    
+    if (!finalForm || !finalCurrentValue) return;
 
-if (form) {
-    form.addEventListener("change", () => {
-        const value = new FormData(form).get("rating");
-        if (value) {
-            currentValue.textContent = `선택된 평점: ${value}점`;
-            errorText.classList.add("d-none");
-        }
+    // 평점 선택 시 표시 업데이트
+    finalStars.forEach(star => {
+        star.addEventListener('change', () => {
+            const selectedValue = document.querySelector('input[name="final-rating"]:checked')?.value;
+            if (selectedValue) {
+                finalCurrentValue.textContent = `선택된 평점: ${selectedValue}점`;
+                if (finalErrorText) {
+                    finalErrorText.classList.add("d-none");
+                }
+            } else {
+                finalCurrentValue.textContent = "선택된 평점: 없음";
+            }
+        });
     });
 
-    form.addEventListener("submit", (e) => {
+    // 폼 제출 처리
+    finalForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const data = new FormData(form);
-        const value = data.get("rating");
-        const review = reviewText.value.trim();
+        
+        const selectedRating = document.querySelector('input[name="final-rating"]:checked')?.value;
+        const reviewTextElem = document.getElementById("final-review-text");
+        const reviewText = reviewTextElem ? reviewTextElem.value.trim() : "";
 
-        if (!value) {
-            errorText.classList.remove("d-none");
+        if (!selectedRating) {
+            if (finalErrorText) {
+                finalErrorText.classList.remove("d-none");
+            }
+            finalCurrentValue.textContent = "선택된 평점: 없음";
+            return;
+        } else {
+            if (finalErrorText) {
+                finalErrorText.classList.add("d-none");
+            }
+        }
+
+        if (!reviewText) {
+            alert("소원을 작성해주세요!");
+            if (reviewTextElem) reviewTextElem.focus();
             return;
         }
 
-        if (!review) {
-            alert("후기를 작성해주세요!");
-            return;
+        // 성공 메시지 표시
+        alert("태백에서 만나요! ✨");
+        
+        // 폼 리셋
+        finalForm.reset();
+        finalCurrentValue.textContent = "선택된 평점: 없음";
+        if (finalErrorText) {
+            finalErrorText.classList.add("d-none");
         }
-
-        alert(`감사합니다! ${value}점 평점과 후기가 제출되었습니다.`);
-        form.reset();
-        currentValue.textContent = "선택된 평점: 없음";
     });
 }
 
 // Function for the typing effect
 function typeWriterEffect(element, speed) {
-    const text = element.textContent;
+    const text = element.innerHTML;
     let i = 0;
-    element.textContent = ""; // Clear text
+    element.innerHTML = ""; // Clear text
     element.classList.add("typing-text");
 
     function type() {
         if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
+            // Check for a line break tag
+            if (text.substring(i, i + 4) === "<br>") {
+                element.innerHTML += "<br>";
+                i += 4;
+            } else if (text.substring(i, i + 5) === "<br/>") {
+                element.innerHTML += "<br/>";
+                i += 5;
+            } else if (text.substring(i, i + 6) === "<br />") {
+                element.innerHTML += "<br />";
+                i += 6;
+            } else {
+                element.innerHTML += text.charAt(i);
+                i++;
+            }
             setTimeout(type, speed);
         } else {
             element.classList.remove("typing-text"); // Remove cursor after typing is complete
@@ -266,34 +325,40 @@ function typeWriterEffect(element, speed) {
 
 // 스크롤 이벤트에 따른 타이핑 효과 적용
 document.addEventListener("DOMContentLoaded", () => {
-    // 기존 card-text 클래스와 새로운 card-text-letter ID 모두 포함
     const cardTexts = document.querySelectorAll(".card-text");
-    const cardTextLetter = document.getElementById("card-text-letter");
-    
+
     const observerOptions = {
         root: null,
         rootMargin: "0px",
-        threshold: 0.8, // 80%가 보이면 실행
+        threshold: 0.6, // 60%가 보이면 실행
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                // 요소가 화면에 보이면 타이핑 효과 실행
+            if (entry.isIntersecting && !entry.target.classList.contains("typing-completed")) {
+                // 요소가 화면에 보이고 아직 타이핑이 완료되지 않았으면 타이핑 효과 실행
                 typeWriterEffect(entry.target, 30);
+                entry.target.classList.add("typing-completed");
                 // 한 번 실행된 후에는 관찰 중단
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // 기존 .card-text 클래스 요소들을 관찰
-    cardTexts.forEach((cardText) => {
-        observer.observe(cardText);
+    cardTexts.forEach((text) => {
+        observer.observe(text);
     });
+
+    // 모든 초기화 함수 호출
+    initializeSplashScreen();
+    initializeCarousels();
+    setupHamburgerMenu();
     
-    // card-text-letter ID 요소도 관찰 (존재하는 경우)
-    if (cardTextLetter) {
-        observer.observe(cardTextLetter);
-    }
+    // 개별 평점 시스템 설정
+    setupIndividualRatingSystem("ratingForm-milkyway", "rating-milkyway", "currentValue-milkyway");
+    setupIndividualRatingSystem("ratingForm-food", "rating-food", "currentValue-food");
+    setupIndividualRatingSystem("ratingForm-stay", "rating-stay", "currentValue-stay");
+    
+    // 최종 소원 보내기 기능 설정
+    setupFinalRatingSystem();
 });
