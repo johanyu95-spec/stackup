@@ -49,11 +49,6 @@ h2 {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-
-.image {
-    object-fit: cover;
-  }
-
 /* 전체 래퍼 (여백과 배경 제어) */
 #wrap-letter {
   display: flex;
